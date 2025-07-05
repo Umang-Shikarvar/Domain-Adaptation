@@ -72,8 +72,8 @@ def collate_fn(batch):
 
 # Load dataset
 dataset = TIFRCNNDataset(
-    image_dir='/home/umang.shikarvar/CycleGAN/lucknow_val/images',
-    label_dir='/home/umang.shikarvar/CycleGAN/lucknow_val/labels',
+    image_dir='/home/umang.shikarvar/data/delhi/images',
+    label_dir='/home/umang.shikarvar/data/delhi/labels',
     transforms=transform
 )
 
@@ -86,7 +86,7 @@ backbone = resnet_fpn_backbone(
 )
 # Your number of classes (3 foreground + 1 background)
 model = FasterRCNN(backbone, num_classes=4)
-model.load_state_dict(torch.load("/home/umang.shikarvar/CycleGAN/delhi_rcnn.pth",map_location=device))
+# model.load_state_dict(torch.load("/home/umang.shikarvar/AL/delhi_rcnn.pth",map_location=device))
 model.to(device)
 model.train()
 
@@ -118,4 +118,4 @@ for epoch in range(num_epochs):
     
     end_time = time.time()
     print(f"[Epoch {epoch+1}/{num_epochs}] Loss: {epoch_loss:.4f} | Time: {end_time - start_time:.2f}s")
-    torch.save(model.state_dict(), f"/home/umang.shikarvar/CycleGAN/finetuned_source_detectors/model_epoch_{epoch+1}.pth")
+    torch.save(model.state_dict(), f"/home/umang.shikarvar/AL/source_detectors/model_epoch_{epoch+1}.pth")

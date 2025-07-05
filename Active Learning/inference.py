@@ -19,14 +19,14 @@ backbone = resnet_fpn_backbone(
 )
 # Your number of classes (3 foreground + 1 background)
 model = FasterRCNN(backbone, num_classes=4)
-model.load_state_dict(torch.load("/home/umang.shikarvar/Final/gen_source_detectors/model_epoch_30.pth", map_location=device))
+model.load_state_dict(torch.load("/home/umang.shikarvar/AL/source_detectors/model_epoch_30.pth", map_location=device))
 model.roi_heads.nms_thresh = 0.33
 model.to(device)
 model.eval()
 
 # Paths
-image_dir = "/home/umang.shikarvar/Final/lucknow_airshed/test/images"
-output_dir = "/home/umang.shikarvar/Final/lucknow_predictions"
+image_dir = "/home/umang.shikarvar/data/lucknow_airshed/test/images"
+output_dir = "/home/umang.shikarvar/AL/lucknow_predictions"
 os.makedirs(output_dir, exist_ok=True)
 
 # Image transform

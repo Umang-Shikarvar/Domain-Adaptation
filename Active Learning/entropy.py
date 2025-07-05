@@ -18,13 +18,13 @@ backbone = resnet_fpn_backbone(
     weights=ResNet50_Weights.IMAGENET1K_V1
 )
 model = FasterRCNN(backbone, num_classes=4)
-model.load_state_dict(torch.load("/home/umang.shikarvar/CycleGAN/gen_delhi_rcnn.pth", map_location=device))
+model.load_state_dict(torch.load("/home/umang.shikarvar/AL/source_detectors/model_epoch_30.pth", map_location=device))
 model.roi_heads.nms_thresh = 0.33
 model.to(device)
 model.eval()
 
 # Image paths
-image_dir = "/home/umang.shikarvar/CycleGAN/lucknow_airshed/val/images"
+image_dir = "/home/umang.shikarvar/data/lucknow_airshed/val/images"
 transform = transforms.Compose([transforms.ToTensor()])
 image_uncertainties = []
 
@@ -69,7 +69,7 @@ with torch.no_grad():
 # Sort and save top-K uncertain images
 image_uncertainties.sort(key=lambda x: x[1], reverse=True)
 top_k = 10
-with open("/home/umang.shikarvar/CycleGAN/gen_source_top_uncertain_images.txt", "w") as f:
+with open("/home/umang.shikarvar/AL/top_uncertain_images.txt", "w") as f:
     for fname, ent in image_uncertainties[:top_k]:
         f.write(f"{fname}\n")
 
